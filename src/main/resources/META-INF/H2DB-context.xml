@@ -8,16 +8,11 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd">
 
 	<!-- Database -->
-	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    <property name="url" value="jdbc:mysql://localhost:3306/springjpa"/>
-    <property name="username" value="root"/>
-    <property name="password" value="root"/>
-</bean>
+	<jdbc:embedded-database id="ds" type="H2"></jdbc:embedded-database>
 	<!-- Entity Manager  -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="ds"/>
-        <property name="persistenceUnitName" value="myUnit"/>
+        <property name="persistenceUnitName" value="H2DB_myUnit"/>
     </bean>
     
     <!-- Transaction Manager-->
