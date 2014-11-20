@@ -2,9 +2,13 @@ package com.truonghan;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -30,6 +34,48 @@ public class PostRepositoryTest {
 
 	@Autowired
 	PostRepository repository;
+	
+	@PersistenceContext
+	EntityManager em;
+	
+	@Test
+	public void orderTest(){
+		
+		List<Comment> comments = new ArrayList<Comment>();
+		Post post = new Post();
+		post.setTitle("Title");
+		
+		for(int i=0; i<30; i++){
+			
+			Comment comment = new Comment();
+			
+			Stamp stamp = new Stamp();
+			stamp.setAuthor("Truong Han");
+			stamp.setCreateDate(new Date(113,01,i));
+			
+			comment.setBody(i + "Test");
+			comment.setStamp(stamp);
+			comment.setPost(post);
+			comments.add(comment);
+		}
+		
+		post.setComments(comments);
+		repository.save(post);
+		
+		em.refresh(post);// If not it will read from cache
+		
+		Post dbpost = repository.findOne(post.getPostId());
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		List<Comment> dbcomments = dbpost.getComments();
+		
+		for(Comment comm: dbcomments){
+			System.out.println(comm.getBody());
+			System.out.println(format.format(comm.getStamp().getCreateDate()));
+		}
+	}
+	
+	
+	
 	
 	/*@Test
 	public void test() {
@@ -60,7 +106,22 @@ public class PostRepositoryTest {
 		assertTrue(tags.contains(tag));
 		assertTrue(tags.contains(tag1));
 	}
-	*/
+	
+	@Test
+	public void entityCollectionTest(){
+		Post post = repository.findOne(24);
+		int size = post.getUrls().size();
+		
+		assertTrue(size>0);
+		
+		post.getUrls().add("oneway.vn");
+		
+		repository.save(post);
+		
+		Post dbpost = repository.findOne(24);
+		assertEquals(size + 1, dbpost.getUrls().size());
+		
+		}
 	@Test
 	public void InserTest(){
 		
@@ -110,5 +171,6 @@ public class PostRepositoryTest {
 		System.out.println(dbpost.getTitle());
 		
 	}
+	*/
 
 }

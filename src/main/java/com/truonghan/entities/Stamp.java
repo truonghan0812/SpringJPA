@@ -15,10 +15,6 @@ public class Stamp {
 	@Column(name="CREATED_DATE")
 	private Date createDate;
 	
-	
-	
-	
-	
 	public String getAuthor() {
 		return author;
 	}
