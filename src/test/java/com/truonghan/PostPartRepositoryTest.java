@@ -18,15 +18,15 @@ import com.truonghan.repositories.PostPartRepository;
 import com.truonghan.repositories.PostRepository;
 
 	@RunWith(SpringJUnit4ClassRunner.class)
-	@ContextConfiguration(locations="classpath:META-INF/H2DB-context.xml")
-	//@ContextConfiguration(locations="classpath:META-INF/application-context.xml")
+	@ContextConfiguration(locations="classpath:META-INF/application-context.xml")
+	//@ContextConfiguration(locations="classpath:META-INF/H2DB-context.xml")
 	@Transactional
 public class PostPartRepositoryTest {
 
 	@Autowired
 	PostPartRepository repository;
 	
-	@Test
+/*	@Test
 	public void test() {
 		PostPart postpart = new PostPart();
 		String body = "body";
@@ -37,7 +37,7 @@ public class PostPartRepositoryTest {
 		PostPart dbpostpart = repository.findOne(postpart.getPostPartId());
 		assertNotNull(dbpostpart);
 		assertNotEquals(body, dbpostpart.getBody());
-	}
+	}*/
 	
 	@Test
 	public void InserTest(){

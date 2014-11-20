@@ -29,6 +29,7 @@ public class PostPart {
 	public void setPost(Post post) {
 		this.post = post;
 	}
+	
 	public Integer getPostPartId() {
 		return postPartId;
 	}
