@@ -23,19 +23,11 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ManyToAny;
+
 @Entity
 @Table(name="POST")
-public class Post {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="POST_ID")
-	private Integer postId;
+public class Post extends AbstractPost {
 	
-	@Column(name="TITLE")
-	private String title;
-	
-	@Column(name="POST_DATE")
-	private Date postDate;
 	
 	@Embedded
 	private Stamp stamp;
@@ -93,24 +85,6 @@ public class Post {
 		this.postPart = postPart;
 	}
 	
-	public Integer getPostId() {
-		return postId;
-	}
-	public void setPostId(Integer postId) {
-		this.postId = postId;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public Date getPostDate() {
-		return postDate;
-	}
-	public void setPostDate(Date postDate) {
-		this.postDate = postDate;
-	}
 	
 
 	@Override
