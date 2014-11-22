@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -26,6 +28,17 @@ import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Table(name="POST")
+@NamedQueries(value={
+		@NamedQuery(name="Post.findPosts",query="select p from Post p"),
+		@NamedQuery(name="Post.teaser",query="select" + 
+											  " p.title,p.stamp.author,pp.body" +
+											  " from Post p join p.postPart pp"),
+	    @NamedQuery(name="Post.teaser_class",query="select" + 
+													  " New com.truonghan.entities.Teaser(p.title,p.stamp.author,pp.body)" +
+													  " from Post p join p.postPart pp "+
+													  " where p.stamp.author like :name")									  
+})
+ 
 public class Post extends AbstractPost {
 	
 	
