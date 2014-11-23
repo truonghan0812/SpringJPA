@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -27,24 +28,24 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ManyToAny;
 
 @Entity
-@Table(name="POST")
-@NamedQueries(value={
-		@NamedQuery(name="Post.findPosts",query="select p from Post p"),
-		@NamedQuery(name="Post.teaser",query="select" + 
-											  " p.title,p.stamp.author,pp.body" +
-											  " from Post p join p.postPart pp"),
-	    @NamedQuery(name="Post.teaser_class",query="select" + 
-													  " New com.truonghan.entities.Teaser(p.title,p.stamp.author,pp.body)" +
-													  " from Post p join p.postPart pp "+
-													  " where p.stamp.author like :name")									  
-})
- 
+@Table(name="st_post")
+@NamedQueries(value = {
+		@NamedQuery(name = "Post.findPosts", query = "select p from Post p"),
+		@NamedQuery(name = "Post.teaser", query = "select " +
+				"p.title, p.stamp.author, pp.body " +
+				"from Post p join p.postPart pp"),
+		@NamedQuery(name = "Post.teaser.constructor", query = "select " +
+				"NEW com.truonghan.entities.Teaser(p.title, p.stamp.author, " +
+				"SUBSTRING(pp.body, 1,200)) " +
+				"from Post p join p.postPart pp" +
+				" where p.stamp.author like :name")
+		}
+)
+@DiscriminatorValue(value="REGULAR")
 public class Post extends AbstractPost {
-	
 	
 	@Embedded
 	private Stamp stamp;
-	
 
 	public Stamp getStamp() {
 		return stamp;

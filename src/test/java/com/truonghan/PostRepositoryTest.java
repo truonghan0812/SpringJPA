@@ -73,6 +73,10 @@ public class PostRepositoryTest {
 			System.out.println(format.format(comm.getStamp().getCreateDate()));
 		}
 	}
+	@Test
+	public void find(){
+		Post post = repository.findOne(123);
+	}
 	
 	
 	
